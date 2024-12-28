@@ -1,12 +1,10 @@
 import '@mantine/core/styles.css';
 
-import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'NDC London 2025 Demos',
 };
 
 export default function RootLayout({ children }: { children: any }) {
