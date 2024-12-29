@@ -1,6 +1,7 @@
 "use client"
 import { getAsyncFileHandle } from "@/lib/opfs-utils";
 import { Accordion, AccordionItem, Button, Container, Group } from "@mantine/core";
+import { init } from "opfs-tools-explorer";
 import { useEffect, useRef, useState } from "react";
 import { VideoComp } from "../Video/video.style";
 let mediaRecorder: MediaRecorder;
@@ -21,7 +22,7 @@ export function RecordingComp() {
       const recFile = await getOpfsFile()
       recFile?.size && setOpfsFile(recFile)
     }
-    // init()
+    init()
     setOpfsState()
   }, [])
 
@@ -157,27 +158,27 @@ export function RecordingComp() {
       <Accordion defaultValue="no-opfs" variant="contained" chevronPosition='left' mt='lg'>
         <AccordionItem value="no-opfs">
           <Accordion.Control>
-            Without OPFS ❌
+            OPFS(Main Thread) 👌
           </Accordion.Control>
           <Accordion.Panel>
             <Group justify='center' mt="lg">
-              <Button disabled={isRecording} onClick={() => startRecording()}>Start Recording</Button>
-              <Button disabled={!isRecording} onClick={stopRecording}>Stop Recording</Button>
-              <Button disabled={!recordingDone} onClick={() => playRecording()}>Play Recording</Button>
-              <Button disabled={!recordingDone} onClick={() => downloadRecording()}>Download Recording</Button>
+              <Button disabled={isRecording} onClick={() => startRecording()}>Start Recording(Main)</Button>
+              <Button disabled={!isRecording} onClick={stopRecording}>Stop Recording(Main)</Button>
+              <Button disabled={!recordingDone} onClick={() => playRecording()}>Play Recording(Main)</Button>
+              <Button disabled={!recordingDone} onClick={() => downloadRecording()}>Download Recording(Main)</Button>
             </Group>
           </Accordion.Panel>
         </AccordionItem>
         <AccordionItem value="opfs">
           <Accordion.Control>
-            With OPFS ✅
+            OPFS(Web worker) 🚀
           </Accordion.Control>
           <Accordion.Panel>
             <Group justify='center' mt="lg">
-              <Button disabled={isRecording} onClick={() => startRecording(true)}>Start Recording(OPFS)</Button>
-              <Button disabled={!isRecording} onClick={stopRecording}>Stop Recording(OPFS)</Button>
-              <Button disabled={!opfsFile} onClick={playOpfsRecording}>Play Recording(OPFS)</Button>
-              <Button disabled={!opfsFile} onClick={downloadOpfsRecording}>Download Recording(OPFS)</Button>
+              <Button disabled={isRecording} onClick={() => startRecording(true)}>Start Recording(Worker)</Button>
+              <Button disabled={!isRecording} onClick={stopRecording}>Stop Recording(Worker)</Button>
+              <Button disabled={!opfsFile && !recordingDone} onClick={playOpfsRecording}>Play Recording(Worker)</Button>
+              <Button disabled={!opfsFile && !recordingDone} onClick={downloadOpfsRecording}>Download Recording(Worker)</Button>
             </Group>
           </Accordion.Panel>
         </AccordionItem>
