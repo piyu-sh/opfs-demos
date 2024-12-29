@@ -1,7 +1,7 @@
 'use client'
 import { getAsyncFileHandle } from "@/lib/opfs-utils";
 import { LineChart } from '@mantine/charts';
-import { Box, Button, Container, Divider, LoadingOverlay, Stack, Table, TableData } from "@mantine/core";
+import { Box, Button, Container, Divider, Group, LoadingOverlay, Table, TableData } from "@mantine/core";
 import { init } from 'opfs-tools-explorer';
 import { useEffect, useState } from "react";
 
@@ -146,10 +146,10 @@ export function Logs() {
 
   return (
     <Container >
-      <Stack align="flex-start" justify="center" mt='lg'>
+      <Group justify="center" mt='lg'>
         <Button loading={isAsyncRunning} disabled={isAsyncRunning || isSyncRunning} onClick={runAsyncBenchmark}>Run Async writes on main thread benchmark</Button>
         <Button loading={isSyncRunning} disabled={isAsyncRunning || isSyncRunning} onClick={runSyncBenchmark}>Run Sync writes with worker benchmark</Button>
-      </Stack>
+      </Group>
       <Table data={tableState} mt='lg' />
       <Divider m="lg" />
       <Box pos="relative">

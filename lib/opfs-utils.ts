@@ -57,3 +57,17 @@ export async function getAsyncFileHandle(
   return metaFileHandle;
 }
 
+//#region debug
+async function listFiles() {
+  const dir = await navigator.storage.getDirectory()
+  const dirHandle = await dir.getDirectoryHandle('logs')
+  // @ts-ignore
+  for await (const [name, handle] of dirHandle.entries()) {
+    if (handle.kind === 'file') {
+      const file = await handle.getFile()
+      console.log(name, file)
+    }
+  }
+}
+
+//#endregion
