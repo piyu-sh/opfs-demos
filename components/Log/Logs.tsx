@@ -1,6 +1,7 @@
 'use client'
 import { getAsyncFileHandle } from "@/lib/opfs-utils";
-import { Button, Container, Stack, Table, TableData } from "@mantine/core";
+import { LineChart } from '@mantine/charts';
+import { Box, Button, Container, Divider, LoadingOverlay, Stack, Table, TableData } from "@mantine/core";
 import { init } from 'opfs-tools-explorer';
 import { useEffect, useState } from "react";
 
@@ -15,9 +16,17 @@ const tableData: TableData = {
     [10000, '', ''],
   ],
 };
+const chartData = tableData.body?.map(item => {
+  return {
+    rows: item[0],
+    async_main: item[1],
+    sync_worker: item[2]
+  }
+})
 
 export function Logs() {
   const [tableState, setTableState] = useState(tableData)
+  const [chartState, setChartState] = useState(chartData)
   const [isAsyncRunning, setIsAsyncRunning] = useState(false)
   const [isSyncRunning, setIsSyncRunning] = useState(false)
   useEffect(() => {
@@ -43,6 +52,11 @@ export function Logs() {
           body: newBody
         }
       })
+      setChartState(prevChartState => {
+        const newChartState = [...prevChartState!]
+        newChartState[i].async_main = endBenchmark - startBenchmark
+        return newChartState
+      })
       console.log(endBenchmark - startBenchmark, 'ms')
     }
     console.log('async benchmark done !')
@@ -65,6 +79,11 @@ export function Logs() {
           ...prevTableState,
           body: newBody
         }
+      })
+      setChartState(prevChartState => {
+        const newChartState = [...prevChartState!]
+        newChartState[i].sync_worker = endBenchmark - startBenchmark
+        return newChartState
       })
       console.log(endBenchmark - startBenchmark, 'ms')
       logWorker.terminate()
@@ -132,6 +151,27 @@ export function Logs() {
         <Button loading={isSyncRunning} disabled={isAsyncRunning || isSyncRunning} onClick={runSyncBenchmark}>Run Sync writes with worker benchmark</Button>
       </Stack>
       <Table data={tableState} mt='lg' />
+      <Divider m="lg" />
+      <Box pos="relative">
+        <LoadingOverlay visible={isAsyncRunning || isSyncRunning} zIndex={1000} overlayProps={{ radius: "lg", blur: 5 }} />
+        <LineChart
+          h={300}
+          mt="lg"
+          data={chartState!}
+          dataKey="rows"
+          series={[
+            { name: 'async_main', label: 'Async writes in main thread', color: 'teal.6' },
+            { name: 'sync_worker', label: 'Sync writes in web worker', color: 'blue.6' },
+          ]}
+          xAxisLabel="Num of rows written"
+          yAxisLabel="Time taken(ms)"
+          unit="ms"
+          withLegend
+          curveType="natural"
+          tickLine="x"
+          tooltipAnimationDuration={200}
+        />
+      </Box>
     </Container>
   )
 }
