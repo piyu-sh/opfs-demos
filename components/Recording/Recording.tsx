@@ -150,7 +150,7 @@ export function RecordingComp() {
 
   return (
     <Container>
-      <Group justify='center'>
+      <Group justify='center' mt="lg">
         <VideoComp id="gum-local" ref={origVideo} autoPlay playsInline muted />
         <VideoComp id="recorded" ref={recVideo} playsInline loop />
       </Group>
