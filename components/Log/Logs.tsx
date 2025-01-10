@@ -13,7 +13,7 @@ const tableData: TableData = {
     [100, '', ''],
     [1000, '', ''],
     [5000, '', ''],
-    [10000, '', ''],
+    // [10000, '', ''],
   ],
 };
 const chartData = tableData.body?.map(item => {
