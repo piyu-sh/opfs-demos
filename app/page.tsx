@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function HomePage() {
   return (
     <>
-      <Welcome text='NDC London 2025 Demos' />
+      <Welcome text='OPFS Demos' />
       <Container>
         <List>
           <ListItem>
