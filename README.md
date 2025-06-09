@@ -1,4 +1,4 @@
-# NDC London 2025 Demos
+# OPFS Demos
 
 Run `pnpm i` and then `pnpm dev`
 
@@ -7,4 +7,4 @@ Contains two demos
 2. `/logs-demo` - demonstrates performance difference in async vs sync writes
 
 Live demo
-https://ndc-london-2025-demos.pages.dev/
+https://demos.thepira.com 
