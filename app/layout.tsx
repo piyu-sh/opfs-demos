@@ -5,7 +5,7 @@ import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/c
 import { theme } from '../theme';
 
 export const metadata = {
-  title: 'NDC London 2025 Demos',
+  title: 'OPFS Demos',
 };
 
 export default function RootLayout({ children }: { children: any }) {
